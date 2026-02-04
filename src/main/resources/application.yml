@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: distributed-url-shortener
+  profiles:
+    active: dev
+  # Enable Virtual Threads to handle 100M DAU high concurrency
+  threads:
+    virtual:
+      enabled: true
+  main:
+    banner-mode: "off"
+
+server:
+  port: 8080
+  tomcat:
+    # Max connections from OS to Tomcat
+    max-connections: 10000
+    # Queue size for incoming requests
+    accept-count: 500
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics

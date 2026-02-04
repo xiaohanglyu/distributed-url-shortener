@@ -1,0 +1,38 @@
+spring:
+  flyway:
+    # Enable flyway on startup
+    enabled: true
+    # Directory where scripts are located
+    locations: classpath:db/migration
+    # Allow out-of-order execution if multiple developers are working
+    out-of-order: true
+    # Validate that scripts haven't been tampered with
+    validate-on-migrate: true
+
+  datasource:
+    # Ensure your MySQL user has permission to CREATE/ALTER tables
+    url: jdbc:mysql://localhost:3306/short_link?useSSL=false&allowPublicKeyRetrieval=true&allowMultiQueries=true&characterEncoding=UTF-8
+    username: root
+    password: your_password
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 100
+          max-idle: 20
+          max-wait: 1000ms
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      acks: 1
+      batch-size: 16384
+      # Using Zstd or Snappy compression for higher throughput
+      compression-type: snappy
+
+logging:
+  level:
+    com.lynlyu.shortlink: debug

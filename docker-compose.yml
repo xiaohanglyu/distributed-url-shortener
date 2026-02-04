@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # MySQL 8.0 instance for link storage and ID generation
+  mysql:
+    image: mysql:8.0
+    container_name: shortlink-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_DATABASE: short_link
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-db-data:/var/lib/mysqlgit add .gitignore
+    networks:
+      - shortlink-network
+
+  # Redis for high-speed caching (100M DAU ready)
+  redis:
+    image: redis:latest
+    container_name: shortlink-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - shortlink-network
+
+networks:
+  shortlink-network:
+    driver: bridge
